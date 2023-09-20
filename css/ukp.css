@@ -1,0 +1,1091 @@
+/**
+ * 프로젝트에 맞게 파일명 및 css 변경해서 사용
+ * 클래스명 변경시 접두어만 찾아서 전체변경
+ * 사이즈 rem단위 (base=16px)
+ * border 있는경우 box-sizing: border-box;
+ * ukp__box 접두어 사용불가
+ * 레이아웃모듈 상단에 위치, ukp__module_layout 접두어, 모듈안에 모듈이 가능한경우 레이아웃
+ * 상속형태로 사용불가 ex) .module_test.test(x) .module_test > .test(o)
+ * 한 태그에 두개 모듈불가, 스타일모듈은 예외 ex) <div class="module_hello module_world"></div> (x) <div class="module_hello module_style_world"></div> (o)
+ * 스타일모듈은 모듈과 같은 위치에
+ * 개별 스타일은 ukp__module_style에서 설정
+ * 
+ * require github-markdown.css
+ * @version 2021.11.27
+ * @author ukp
+ */
+
+/**
+스타일
+모듈별로 css 다르게 설정
+
+*/
+/* ukp__module_btn */
+.ukp__module_btn.ukp__module_style_small {
+    font-size: 0.75rem;
+    height: 1.875rem;
+    line-height: 1.875rem;
+    padding: 0 0.375rem;
+}
+/* ukp__module_layout_inline_block */
+.ukp__module_layout_inline_block.ukp__module_style_center {
+    text-align: center;
+}
+.ukp__module_layout_inline_block.ukp__module_style_right {
+    text-align: right;
+}
+/* ukp__module_input */
+.ukp__module_input.ukp__module_style_small > .ukp__content {
+    height: 1.875rem;
+}
+.ukp__module_input.ukp__module_style_small > .ukp__content > .ukp__input {
+    font-size: 0.75rem;
+}
+/* ukp__module_proportion */
+.ukp__module_proportion.ukp__module_style_16_9::before {
+    padding-top: 56.25%;
+}
+.ukp__module_proportion.ukp__module_style_3_4::before {
+    padding-top: 75%;
+}
+
+
+/**
+카드 레이아웃
+
+<div class="ukp__module_layout_card"></div>
+*/
+.ukp__module_layout_card {
+    background-color: white;
+    box-shadow: 0 0.125rem 0.3125rem 0 rgba(0,0,0,.16), 0 0.125rem 0.625rem 0 rgba(0,0,0,.12);
+}
+
+
+/**
+float 레이아웃
+
+<div class="ukp__module_layout_float">
+    <div class="ukp__left">왼쪽</div>
+    <div class="ukp__right">오른쪽</div>
+</div>
+*/
+.ukp__module_layout_float::after {
+    content: "";
+    display: block;
+    position: relative;
+    clear: both;
+}
+.ukp__module_layout_float > .ukp__left {
+    float: left;
+    display: block;
+}
+.ukp__module_layout_float > .ukp__right {
+    float: right;
+    display: block;
+}
+
+
+/**
+inline-block 레이아웃
+
+<div class="ukp__module_layout_inline_block">
+    <div class="ukp__content">내용</div>
+    <div class="ukp__content">내용</div>
+    <div class="ukp__content">내용</div>
+</div>
+*/
+.ukp__module_layout_inline_block {
+    font-size: 0;
+}
+.ukp__module_layout_inline_block > .ukp__content {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+
+/**
+테이블 레이아웃
+
+<table class="ukp__module_layout_table">
+    <colgroup>
+        <col>
+        <col>
+        <col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="ukp__center">1</td>
+            <td class="ukp__left">안녕하세요</td>
+            <td class="ukp__right">2021-01-01</td>
+        </tr>
+        <tr>
+            <td class="ukp__center">2</td>
+            <td class="ukp__left">안녕하세요</td>
+            <td class="ukp__right">2021-01-01</td>
+        </tr>
+    </tbody>
+</table>
+*/
+.ukp__module_layout_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+.ukp__module_layout_table > thead {
+    font-weight: bold;
+    text-align: center;
+}
+.ukp__module_layout_table > thead > tr > th {
+    border-top: 0.1875rem solid black;
+    border-bottom: 0.0625rem solid black;
+    padding: 0.625rem;
+}
+.ukp__module_layout_table > tbody > tr > td {
+    border-bottom: 0.0625rem solid black;
+    padding: 0.625rem;
+}
+.ukp__module_layout_table > tbody > tr > .ukp__center {
+    text-align: center;
+}
+.ukp__module_layout_table > tbody > tr > .ukp__left {
+    text-align: left;
+}
+.ukp__module_layout_table > tbody > tr > .ukp__right {
+    text-align: right;
+}
+
+
+/**
+모바일테이블 레이아웃
+
+<div class="ukp__module_layout_table_m">
+    <div class="ukp__row">
+        <div class="ukp__num">
+            정렬<br>1
+        </div>
+        <div class="ukp__content">
+            <div class="ukp__left">항목1</div>
+            <div class="ukp__right">항목2</div>
+            <div class="ukp__center">항목3</div>
+        </div>
+    </div>
+    <div class="ukp__row">
+        <div class="ukp__num">
+            정렬<br>2
+        </div>
+        <div class="ukp__content">
+            <div class="ukp__left">항목1</div>
+            <div class="ukp__right">항목2</div>
+            <div class="ukp__center">항목3</div>
+        </div>
+    </div>
+</div>
+*/
+.ukp__module_layout_table_m {
+    border-top: 0.1875rem solid black;
+}
+.ukp__module_layout_table_m > .ukp__row {
+    border-bottom: 0.0625rem solid black;
+    display: flex;
+    padding: 0.625rem;
+    padding-left: 0.625rem;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__num {
+    flex: none;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding-right: 0.625rem;
+    text-align: center;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content {
+    flex: 1;
+    font-size: 0.75rem;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content > div {
+    padding-bottom: 0.3125rem;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content > div:first-child {
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content > div:last-child {
+    padding-bottom: 0;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content > .ukp__left {
+    text-align: left;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content > .ukp__right {
+    text-align: right;
+}
+.ukp__module_layout_table_m > .ukp__row > .ukp__content > .ukp__center {
+    text-align: center;
+}
+
+/**
+토글
+너비만 설정(높이는 너비의 절반으로 자동설정)
+
+<label class="ukp__module_toggle">
+    <input type="checkbox" class="ukp__check">
+    <div class="ukp__toggle"><div class="ukp__content"></div></div>
+</label>
+*/
+.ukp__module_toggle {
+    display: inline-block;
+    position: relative;
+    font-size: 0;
+    cursor: pointer;
+    width: 3rem;
+}
+.ukp__module_toggle::before {
+    content: "";
+    display: block;
+    position: relative;
+    z-index: 0;
+    padding-top: 50%;
+}
+.ukp__module_toggle > .ukp__check {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+}
+.ukp__module_toggle > .ukp__toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #dfdfdf;
+    width: 100%;
+    height: 100%;
+    padding: 0.0625rem;
+    border-radius: 100rem;
+}
+.ukp__module_toggle > .ukp__toggle > .ukp__content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.ukp__module_toggle > .ukp__toggle > .ukp__content::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    border-radius: 50%;
+    transition: left 0.2s;
+}
+.ukp__module_toggle > .ukp__check:checked + .ukp__toggle {
+    background-color: black;
+}
+.ukp__module_toggle > .ukp__check:checked + .ukp__toggle > .ukp__content::after {
+    left: 50%;
+}
+
+/**
+체크박스
+
+<label class="ukp__module_checkbox">
+    <input type="checkbox" class="ukp__check">
+    <div class="ukp__checkbox"></div>
+    <div class="ukp__text">체크박스</div>
+</label>
+*/
+.ukp__module_checkbox {
+    display: inline-block;
+    position: relative;
+    font-size: 0;
+    cursor: pointer;
+}
+.ukp__module_checkbox > .ukp__check {
+    position: absolute;
+    z-index: 0;
+    left: 0%;
+    top: 50%;
+    transform: translateY(-50%);
+    outline: none;
+}
+.ukp__module_checkbox > .ukp__check:checked + .ukp__checkbox::before {
+    border: 0;
+    background-color: black;
+}
+.ukp__module_checkbox > .ukp__check:checked + .ukp__checkbox::after {
+    border-color: white;
+}
+.ukp__module_checkbox > .ukp__check:checked + .ukp__checkbox + .ukp__text {
+    color: black;
+    font-weight: bold;
+}
+.ukp__module_checkbox > .ukp__checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.25rem;
+    height: 1.25rem;
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+}
+.ukp__module_checkbox > .ukp__checkbox::before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0.0625rem solid #ccc;
+    box-sizing: border-box;
+}
+.ukp__module_checkbox > .ukp__checkbox::after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 25%;
+    border-left: 0.0625rem solid #ccc;
+    border-bottom: 0.0625rem solid #ccc;
+    box-sizing: border-box;
+    position: absolute;
+    transform: translate(50%, 100%) rotate(-45deg);
+}
+.ukp__module_checkbox > .ukp__text {
+    font-size: 0.75rem;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 0.3125rem;
+    color: #808080;
+}
+
+
+/**
+라디오
+
+<label class="ukp__module_radio">
+    <input type="radio" class="ukp__radio">
+    <div class="ukp__radiobox"></div>
+    <div class="ukp__text">라디오</div>
+</label>
+*/
+
+.ukp__module_radio {
+    display: inline-block;
+    position: relative;
+    font-size: 0;
+    cursor: pointer;
+}
+.ukp__module_radio > .ukp__radio {
+    position: absolute;
+    z-index: 0;
+    left: 0%;
+    top: 50%;
+    transform: translateY(-50%);
+    outline: none;
+}
+.ukp__module_radio > .ukp__radio:checked + .ukp__radiobox {
+    border-color: black;
+}
+.ukp__module_radio > .ukp__radio:checked + .ukp__radiobox::after {
+    background-color: black;
+}
+.ukp__module_radio > .ukp__radio:checked + .ukp__radiobox + .ukp__text {
+    color: black;
+    font-weight: bold;
+}
+.ukp__module_radio > .ukp__radiobox {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0.1875rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 100rem;
+    position: relative;
+    background-color: white;
+    box-sizing: border-box;
+    border: 0.0625rem solid #ccc;
+}
+.ukp__module_radio > .ukp__radiobox::after {
+    content: "";
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 100rem;
+    margin: auto auto;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+.ukp__module_radio > .ukp__text {
+    font-size: 0.75rem;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 0.3125rem;
+    color: #808080;
+}
+
+
+/**
+버튼
+
+<button class="ukp__module_btn">버튼</button>
+*/
+.ukp__module_btn {
+    display: inline-block;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    background-color: black;
+    color: white;
+    border: 0;
+    border-radius: 0;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.ukp__module_btn:focus {
+    outline: none;
+}
+
+
+/**
+텍스트필드
+
+<div class="ukp__module_input">
+    <div class="ukp__label">금액</div>
+    <div class="ukp__content">
+        <div class="ukp__before"></div>
+        <input class="ukp__input" type="number" step="0.01">
+        <div class="ukp__after"></div>
+    </div>
+</div>
+*/
+.ukp__module_input {
+    display: inline-block;
+    width: 10rem;
+}
+.ukp__module_input > .ukp__label {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.ukp__module_input > .ukp__content {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border: 0.0625rem solid black;
+    height: 2.5rem;
+}
+.ukp__module_input > .ukp__content > .ukp__before {
+    flex: 0;
+}
+.ukp__module_input > .ukp__content > .ukp__input {
+    flex: 1;
+    width: 1rem;
+    display: block;
+    height: 100%;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 1rem;
+    padding: 0;
+}
+.ukp__module_input > .ukp__content > .ukp__input:focus {
+    outline: none;
+}
+.ukp__module_input > .ukp__content > .ukp__input[type="number"]::-webkit-outer-spin-button,
+.ukp__module_input > .ukp__content > .ukp__input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.ukp__module_input > .ukp__content > .ukp__input[type="number"] {
+    -moz-appearance: textfield;
+}
+.ukp__module_input > .ukp__content > .ukp__after {
+    flex: 0;
+}
+
+
+/**
+텍스트박스
+
+<div class="ukp__module_textarea">
+    <div class="ukp__label">내용</div>
+    <textarea class="ukp__textarea"></textarea>
+</div>
+*/
+.ukp__module_textarea {
+    position: relative;
+}
+.ukp__module_textarea > .ukp__label {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.ukp__module_textarea > .ukp__textarea {
+    display: block;
+    width: 100%;
+    height: 18.75rem;
+    box-sizing: border-box;
+    border: 0.0625rem solid black;
+    resize: none;
+}
+.ukp__module_textarea > .ukp__textarea:focus {
+    outline: none;
+}
+
+
+/**
+파일
+썸네일 크기 자바스크립트에서 변경
+
+<div class="ukp__module_file">
+    <div class="ukp__title">파일</div>
+    <div class="ukp__thumbnail ukp__js_module_thumbnail"></div>
+    <div class="ukp__list">
+        <label class="ukp__label">
+            <input type="file" class="ukp__file" onchange="ukp__js_module.change_file(this)">
+            <div class="ukp__btn">파일선택</div>
+        </label>
+        <div class="ukp__name ukp__js_module_name"></div>
+    </div>
+</div>
+*/
+.ukp__module_file {
+    display: inline-block;
+}
+.ukp__module_file > .ukp__title {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.ukp__module_file > .ukp__thumbnail {
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.ukp__module_file > .ukp__active {
+    width: 12.5rem;
+    height: 12.5rem;
+    border: 0.0625rem solid black;
+}
+.ukp__module_file > .ukp__list {
+    font-size: 0;
+}
+.ukp__module_file > .ukp__list > .ukp__label {
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+}
+.ukp__module_file > .ukp__list > .ukp__label > .ukp__file {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+}
+.ukp__module_file > .ukp__list > .ukp__label > .ukp__btn {
+    position: relative;
+    display: inline-block;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    background-color: black;
+    color: white;
+    border: 0;
+    border-radius: 0;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.ukp__module_file > .ukp__list > .ukp__name {
+    display: inline-block;
+    box-sizing: border-box;
+    margin-left: 0.3125rem;
+    vertical-align: middle;
+    font-size: 0.875rem;
+}
+
+/**
+반응형 썸네일
+
+*/
+.ukp__module_proportion {
+    width: 25%;
+    background-color: white;
+    box-sizing: border-box;
+    border: 0.0625rem solid black;
+    display: inline-block;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.ukp__module_proportion:before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* 16:9 비율 */
+}
+
+
+/**
+텍스트에디터(markdown)
+form에 이미지 업로드 경로 지정, file name 속성 지정
+마크다운은 서버에서 출력시 html 인코딩 후 출력(자바스크립트로 html 디코딩함)
+
+<div class="ukp__module_texteditor">
+    <div class="ukp__title">에디터</div>
+    <div class="ukp__area">
+        <div class="ukp__markdown ukp__js_module_markdown markdown-body" style="display: none;"></div>
+        <textarea class="ukp__textarea ukp__js_module_textarea"></textarea>
+    </div>
+    <div class="ukp__content">
+        <div class="ukp__left ukp__js_module_form">
+            <label class="ukp__label ukp__js_module_btn_label">
+                <input type="file" class="ukp__file" onchange="ukp__js_module.add_markdown_image(this, 'file', '_upload.php')">
+                <div class="ukp__btn ukp__js_module_btn">이미지</div>
+            </label>
+        </div>
+        <div class="ukp__right">
+            <label class="ukp__markdown">
+                <input type="checkbox" class="ukp__check" onchange="ukp__js_module.toggle_markdown(this)">
+                <div class="ukp__checkbox"></div>
+                <div class="ukp__text">markdown</div>
+            </label>
+        </div>
+    </div>
+</div>
+*/
+.ukp__module_texteditor {
+    position: relative;
+}
+.ukp__module_texteditor > .ukp__title {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.ukp__module_texteditor > .ukp__area {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 18.75rem;
+    border: 0.0625rem solid black;
+}
+.ukp__module_texteditor > .ukp__area > .ukp__markdown {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: white;
+    overflow: auto;
+    padding: 1rem;
+}
+.ukp__module_texteditor > .ukp__area > .ukp__markdown > pre {
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+.ukp__module_texteditor > .ukp__area > .ukp__textarea {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+    background-color: white;
+    border: 0;
+    border-radius: 0;
+    resize: none;
+}
+.ukp__module_texteditor > .ukp__area > .ukp__textarea:focus {
+    outline: none;
+}
+.ukp__module_texteditor > .ukp__content {
+    padding-top: 0.25rem;
+}
+.ukp__module_texteditor > .ukp__content::after {
+    content: "";
+    display: block;
+    position: relative;
+    clear: both;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__left {
+    float: left;
+    display: block;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__left > .ukp__label {
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__left > .ukp__label > .ukp__file {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__left > .ukp__label > .ukp__btn {
+    position: relative;
+    display: inline-block;
+    font-size: 0.75rem;
+    height: 1.875rem;
+    line-height: 1.875rem;
+    padding: 0 0.375rem;
+    background-color: black;
+    color: white;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right {
+    float: right;
+    display: block;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown {
+    display: block;
+    position: relative;
+    font-size: 0;
+    cursor: pointer;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__check {
+    appearance: none;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    bottom: 0;
+    outline: none;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__check:checked + .ukp__checkbox::before {
+    border: 0;
+    background-color: black;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__check:checked + .ukp__checkbox::after {
+    border-color: white;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__check:checked + .ukp__checkbox + .ukp__text {
+    color: black;
+    font-weight: bold;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.875rem;
+    height: 1.875rem;
+    position: relative;
+    background-color: white;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__checkbox::before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0.0625rem solid #ccc;
+    box-sizing: border-box;
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__checkbox::after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 25%;
+    border-left: 0.0625rem solid #ccc;
+    border-bottom: 0.0625rem solid #ccc;
+    box-sizing: border-box;
+    position: absolute;
+    transform: translate(50%, 100%) rotate(-45deg);
+}
+.ukp__module_texteditor > .ukp__content > .ukp__right > .ukp__markdown > .ukp__text {
+    font-size: 1rem;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 0.3125rem;
+    color: #808080;
+}
+
+
+/**
+markdown
+마크다운은 서버에서 출력시 html 인코딩 후 출력(자바스크립트로 html 디코딩함)
+
+<div class="ukp__module_markdown markdown-body"></div>
+*/
+.ukp__module_markdown {
+    padding: 1rem;
+    border: 0.0625rem solid black;
+    box-sizing: border-box;
+}
+.ukp__module_markdown pre {
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+
+
+/**
+셀렉트박스
+
+<div class="ukp__module_select">
+    <div class="ukp__title">셀렉트</div>
+    <select class="ukp__select">
+        <option value="1">항목1</option>
+        <option value="2">항목2</option>
+    </select>
+</div>
+*/
+.ukp__module_select {
+    display: inline-block;
+    font-size: 0;
+    width: 10rem;
+}
+.ukp__module_select > .ukp__title {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.ukp__module_select > .ukp__select {
+    display: block;
+    box-sizing: border-box;
+    border: 0.0625rem solid black;
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0;
+    background-color: white;
+    cursor: pointer;
+}
+.ukp__module_select > .ukp__select:focus {
+    outline: none;
+}
+
+
+/**
+페이지네이션
+
+<div class="ukp__module_pagination">
+    <a href="#" class="ukp__side">&lt;</a>
+    <a href="#" class="ukp__href">1</a>
+    <strong class="ukp__strong">2</strong>
+    <a href="#" class="ukp__href">3</a>
+    <a href="#" class="ukp__side">&gt;</a>
+</div>
+*/
+.ukp__module_pagination {
+    padding: 1.25rem 0;
+    font-size: 0;
+    text-align: center;
+}
+.ukp__module_pagination > a {
+    text-decoration: none;
+}
+.ukp__module_pagination > .ukp__side {
+    font-size: 0.75rem;
+    width: 1.875rem;
+    height: 1.875rem;
+    line-height: 1.875rem;
+    color: black;
+    box-sizing: border-box;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 0.125rem;
+    font-weight: bold;
+}
+.ukp__module_pagination > .ukp__href {
+    font-size: 0.75rem;
+    width: 1.875rem;
+    height: 1.875rem;
+    line-height: 1.75rem;
+    border: 0.0625rem solid black;
+    background-color: white;
+    color: black;
+    box-sizing: border-box;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 0.125rem;
+    font-weight: bold;
+}
+.ukp__module_pagination > .ukp__strong {
+    font-size: 0.75rem;
+    width: 1.875rem;
+    height: 1.875rem;
+    line-height: 1.875rem;
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 0.125rem;
+    font-weight: bold;
+}
+
+/**
+캔버스 그림판
+그림판이 여러개인경우 아이디 겹치지 않게 변경
+
+<div class="ukp__module_paint">
+    <canvas id="ukp__js_module_canvas_1" class="ukp__canvas"></canvas>
+</div>
+*/
+.ukp__module_paint {
+    position: relative;
+    overflow: hidden;
+}
+
+/**
+alert
+공통부분에 한번만 적용
+
+<div class="ukp__module_alert">
+    <div class="ukp__content">
+        <div class="ukp__text ukp__js_module_text"></div>
+        <button type="button" class="ukp__btn" onclick="ukp__js_module.alert_end()">확인</button>
+    </div>
+</div>
+*/
+.ukp__module_alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+}
+.ukp__module_alert > .ukp__content {
+    width: 18.75rem;
+    background-color: white;
+    padding: 1.25rem;
+    margin: auto;
+    text-align: center;
+}
+.ukp__module_alert > .ukp__content > .ukp__text {
+    font-size: 0.875rem;
+    padding-top: 1.25rem;
+    padding-bottom: 2.5rem;
+    word-break: break-all;
+}
+.ukp__module_alert > .ukp__content > .ukp__btn {
+    box-sizing: border-box;
+    width: 100%;
+    height: 2.5rem;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 0;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+/**
+confirm
+공통부분에 한번만 적용
+
+<div class="ukp__module_confirm">
+    <div class="ukp__content">
+        <div class="ukp__text ukp__js_module_text"></div>
+        <div class="ukp__btn_list">
+            <button type="button" class="ukp__cancel_btn" onclick="ukp__js_module.confirm_end(false)">취소</button>
+            <button type="button" class="ukp__confirm_btn" onclick="ukp__js_module.confirm_end(true)">확인</button>
+        </div>
+    </div>
+</div>
+*/
+.ukp__module_confirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+}
+.ukp__module_confirm > .ukp__content {
+    width: 18.75rem;
+    background-color: white;
+    padding: 1.25rem;
+    margin: auto;
+    text-align: center;
+}
+.ukp__module_confirm > .ukp__content > .ukp__text {
+    font-size: 0.875rem;
+    padding-top: 1.25rem;
+    padding-bottom: 2.5rem;
+    word-break: break-all;
+}
+.ukp__module_confirm > .ukp__content > .ukp__btn_list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ukp__module_confirm > .ukp__content > .ukp__btn_list > .ukp__confirm_btn {
+    box-sizing: border-box;
+    width: calc(50% - 0.3125rem);
+    height: 2.5rem;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 0;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    vertical-align: middle;
+    flex: none;
+}
+.ukp__module_confirm > .ukp__content > .ukp__btn_list > .ukp__cancel_btn {
+    box-sizing: border-box;
+    width: calc(50% - 0.3125rem);
+    height: 2.5rem;
+    font-size: 1rem;
+    border: 0.125rem solid black;
+    border-radius: 0;
+    background-color: white;
+    cursor: pointer;
+    vertical-align: middle;
+    flex: none;
+}
+
+/**
+modal
+
+<div class="ukp__module_modal"></div>
+*/
+.ukp__module_modal {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/**
+텍스트 길이 체크
+
+<div class="ukp__module_text_size"><div class="ukp__text"></div></div>
+*/
+.ukp__module_text_size {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    font-size: 0;
+}
+.ukp__module_text_size > .ukp__text {
+    display: inline-block;
+    font-size: 16px;
+    word-break: break-all;
+}
