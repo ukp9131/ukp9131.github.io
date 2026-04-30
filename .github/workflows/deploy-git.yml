@@ -1,0 +1,67 @@
+name: Deploy to git
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy-git:
+    name: Deploy to git
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to git
+        id: deploy
+        env:
+          GIT_URL: ${{ secrets.GIT_URL }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          # bash 환경설정
+          set -euo pipefail
+          # 임시파일 생성 및 삭제 예약
+          body_file="$(mktemp)"
+          trap 'rm -f "$body_file"' EXIT
+          # 변수
+          timeout=120
+          # cURL 실행. 실패해도 흐름 제어를 위해 일시적으로 -e 해제
+          set +e
+          http_code="$(
+            curl -s -L -X POST "$GIT_URL" \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              --data-urlencode "token=$GIT_TOKEN" \
+              -o "$body_file" \
+              -w "%{http_code}" \
+              -m "$timeout"
+          )"
+          set -e
+          # 코드별 변수 설정 및 출력
+          case "$http_code" in
+            "200")
+              msg="success"
+              ;;
+            "403")
+              msg="::error title=403::토큰값이 올바르지 않습니다."
+              ;;
+            "404")
+              msg="::error title=404::url값이 올바르지 않습니다."
+              ;;
+            "500")
+              msg="::error title=500::$(sed -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/%0A/g' "$body_file")"
+              ;;
+            *)
+              msg="::error title=$http_code::서버가 응답하지 않습니다."
+              ;;
+          esac
+          echo "$msg"
+          # 변수 넘겨주기
+          echo "http_code=$http_code" >> "$GITHUB_OUTPUT"
+          echo "msg=$msg" >> "$GITHUB_OUTPUT"
+      - name: Send an email using SMTP
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from: ${{ format('{0} <{1}>', github.repository, secrets.SMTP_USERNAME) }}
+          to: ${{ format('{0} <{1}>', github.event.head_commit.author.name, github.event.head_commit.author.email) }}
+          subject: ${{ format('{0} {1}', steps.deploy.outputs.http_code, github.repository) }}
+          body: ${{ steps.deploy.outputs.msg }}

@@ -1,1 +1,11 @@
-/nbproject/
+# ukp 사용하는 프로젝트용 .gitignore
+# netbeans 프로젝트 폴더
+/nbproject
+# vscode 프로젝트 폴더
+/.vscode
+# 잠금파일
+.LCK*
+# Mac OS에서 생성하는 파일
+.DS_Store
+# 프로젝트에서 테스트용으로 사용되는 임시파일
+*__*
